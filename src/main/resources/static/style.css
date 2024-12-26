@@ -1,0 +1,15 @@
+.terminal-style {
+    background-color: #000; /* Fondo negro */
+    color: #00ff00; /* Texto verde estilo terminal */
+    font-family: "Courier New", Courier, monospace; /* Fuente monoespaciada */
+    border: 1px solid #444; /* Borde gris oscuro */
+    padding: 10px; /* Espaciado interno */
+    resize: none; /* Desactivar redimensionado */
+}
+
+.terminal-style:focus {
+    outline: none; /* Sin borde azul al enfocar */
+    box-shadow: 0 0 5px #00ff00; /* Brillo verde al enfocar */
+}
+
+
