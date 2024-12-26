@@ -1,5 +1,4 @@
 # Linux Commands CRUD Application
-
 ---
 
 Este proyecto es una aplicación web basada en Spring Boot que permite gestionar comandos de Linux de manera fácil y rápida. Puedes agregar, editar, eliminar y ejecutar comandos Linux desde una interfaz web, además de obtener un código QR para cada comando. Además, ofrece una API REST para interactuar con los comandos programáticamente.
