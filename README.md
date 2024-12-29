@@ -52,8 +52,8 @@ Antes de comenzar, asegúrate de tener instalados los siguientes programas en tu
 1. Clona el repositorio a tu máquina local:
     
     ```bash
-    git clone https://github.com/tu-usuario/linux-commands-crud.git
-    cd linux-commands-crud
+    git clone https://github.com/Cristian-Esc/linuxcommand.git
+    cd linuxcommand
     ```
     
 
