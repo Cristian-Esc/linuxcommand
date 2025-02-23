@@ -55,7 +55,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes programas en tu
     
     ```bash
     git clone https://github.com/Cristian-Esc/linuxcommand.git
-    cd linux-commands-crud
+    cd linuxcommand
     ```
     
 
@@ -107,10 +107,10 @@ Si deseas que la aplicación se inicie automáticamente al iniciar sesión en un
     ```
     [Desktop Entry]
     Type=Application
-    Exec=/ruta/a/tu/script/de/inicio.sh
+    Exec=/ruta/a/tu/script/de/linuxcommand-vx.xx.xx.xxxx.sh
     X-GNOME-Autostart-enabled=true
-    Name=Linux Commands CRUD
-    Comment=Aplicación CRUD de comandos de Linux
+    Name=Linux Commands API
+    Comment=Aplicación API de comandos de Linux
     ```
     
 4. Guarda y cierra el archivo. Ahora la aplicación se iniciará automáticamente al iniciar sesión.
@@ -210,12 +210,12 @@ Edita un comando existente. Debes proporcionar el ID del comando y el nuevo cuer
 
 ```json
 {
-	"id": 1003,
-	"title": "Comando nuevo",
-	"description": "Descripción editada",
-	"command": "kill 1",
-    "active": false,
-    "url": "comando-editado",
+  "id": 1003,
+  "title": "Comando nuevo",
+  "description": "Descripción editada",
+  "command": "kill 1",
+  "active": false,
+  "url": "comando-editado",
 }
 ```
 
