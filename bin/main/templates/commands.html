@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Linux Commands API</title>
+    <script src="/commands/js/alpinejs.js" defer></script>
+    <link href="/css/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="/commands/css/style.css" rel="stylesheet">
+    <style>
+ 
+    </style>
+</head>
+
+<body>
+    <div class="container" x-data="crudApp()" x-init="loadCommands()">
+        <div class="glass-panel text-center">
+            <h1>Linux Commands API</h1>
+            <p class="lead">Gestiona tus comandos de Linux fácilmente</p>
+        </div>
+
+        <!-- Data Table -->
+        <div class="glass-panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Atajo (URL)</th>
+                        <th>Activo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="command in commands" :key="command.id">
+                        <tr>
+                            <td x-text="command.id"></td>
+                            <td x-text="command.title"></td>
+                            <td x-text="command.description"></td>
+							<td class="shortcut-url-compact">
+							    <div class="shortcut-tooltip" :data-url="command.url">
+							        <a :href="`${command.run}`" 
+							           class="shortcut-compact" 
+							           target="_blank"
+							           :title="`Ejecutar: ${command.url}`">
+							            <i class="fas fa-play-circle badge-icon"></i>
+							            <span class="shortcut-text" x-text="command.url.length > 20 ? command.url.substring(0, 20) + '...' : command.url"></span>
+							        </a>
+							    </div>
+							</td>
+                            <td x-text="command.active ? '✅' : '❌'"></td>
+                            <td>
+                                <button class="btn btn-info" @click="showQR(command.id)"><i class="fas fa-qrcode"></i></button>
+                                <button class="btn btn-warning" @click="openEditModal(command)"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger" @click="openDeleteModal(command)"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <!-- Button to Open Create Modal -->
+            <button class="btn btn-primary" @click="openCreateModal()">
+                <i class="fas fa-plus"></i> Crear Comando
+            </button>
+        </div>
+
+        <!-- Modal Create/Edit -->
+        <template x-if="showModal">
+            <div class="modal-overlay" @click.self="closeModal()">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" x-text="isEditing ? 'Editar Comando' : 'Crear Comando'"></h2>
+                        <button class="close-btn" @click="closeModal()">&times;</button>
+                    </div>
+                    <form @submit.prevent="isEditing ? updateCommand() : createCommand()">
+                        <div class="form-group">
+                            <label for="title">Título</label>
+                            <input type="text" id="title" x-model="form.title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea id="description" rows="3" x-model="form.description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="command">Comando</label>
+                            <textarea class="terminal-style" id="command" rows="3" x-model="form.command" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="url">URL</label>
+                            <input type="text" id="url" x-model="form.url" required>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="active" x-model="form.active">
+                            <label for="active">Activo</label>
+                        </div>
+                        <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+                            <button type="button" class="btn btn-secondary" @click="closeModal()">Cancelar</button>
+                            <button type="submit" class="btn btn-success" x-text="isEditing ? 'Actualizar' : 'Crear'"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </template>
+
+        <!-- QR Modal -->
+        <template x-if="showQRModal">
+            <div class="modal-overlay" @click.self="showQRModal = false">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Código QR</h2>
+                        <button class="close-btn" @click="showQRModal = false">&times;</button>
+                    </div>
+                    <div class="text-center">
+                        <img :src="qrCodeSrc" class="qr-code" alt="Código QR">
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Delete Confirmation Modal -->
+        <template x-if="showDeleteModal">
+            <div class="modal-overlay" @click.self="closeDeleteModal()">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Confirmar Eliminación</h2>
+                        <button class="close-btn" @click="closeDeleteModal()">&times;</button>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <p>¿Estás seguro de que deseas eliminar este comando?</p>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                        <button type="button" class="btn btn-secondary" @click="closeDeleteModal()">Cancelar</button>
+                        <button type="button" class="btn btn-danger" @click="deleteCommand()">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Donation Modal -->
+        <template x-if="showDonationModal">
+            <div class="modal-overlay" @click.self="showDonationModal = false">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">¡Apoya este proyecto!</h2>
+                        <button class="close-btn" @click="showDonationModal = false">&times;</button>
+                    </div>
+                    <div>
+                        <p>Si este proyecto te ha sido útil, considera apoyar su desarrollo con una donación. ¡Todas las
+                            contribuciones son bienvenidas!</p>
+                        <h6 style="margin-top: 1rem;">Direcciones para donar:</h6>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><strong>Bitcoin
+                                    (BTC):</strong><br><code>bc1qkpswywdqjht6zpfm694t2m6ewww3ukw25vlemu</code></li>
+                            <li><strong>Osmosis
+                                    (OSMO):</strong><br><code>osmo1gcqmcc8xa4lgxflwfm4fcg2nh722dgmel9l54m</code></li>
+                            <li><strong>Cosmos
+                                    (ATOM):</strong><br><code>cosmos1gcqmcc8xa4lgxflwfm4fcg2nh722dgmeh7vyrf</code></li>
+                        </ul>
+                        <p style="color: rgba(255, 255, 255, 0.7);">Gracias por tu apoyo. 😊</p>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                        <button type="button" class="btn btn-secondary" @click="showDonationModal = false">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- Alerta de error -->
+        <div x-show="errorMessage" class="alert" x-cloak>
+            <strong>Error:</strong> <span x-text="errorMessage"></span>
+            <button @click="errorMessage = ''">&times;</button>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <span>
+                    Este proyecto fue creado por Cristian Escobedo. Haz clic para ver su
+                    <a href="https://github.com/Cristian-Esc/linuxcommand" target="_blank" title="Visita mi GitHub">
+                        GitHub
+                    </a>
+                </span>
+                <button type="button" class="btn btn-primary" style="margin-left: 0.5rem;" @click="showDonationModal = true">
+                    ¡Apoya este proyecto!
+                </button>
+            </p>
+        </footer>
+    </div>
+
+    <!--
+    <div x-data="logoutFunctions">
+        <button class="fab" @click="logout" title="Cerrar sesión">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </div>
+	-->
+
+    <script src="/commands/js/script.js"></script>
+</body>
+</html>

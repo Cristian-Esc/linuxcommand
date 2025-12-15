@@ -1,0 +1,180 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.0'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'application'
+<<<<<<< HEAD
+	id 'org.graalvm.buildtools.native' version '0.10.4'
+=======
+<<<<<<< HEAD
+	id 'org.beryx.jlink' version '3.1.1'
+	id 'org.moditect.gradleplugin' version "1.0.0-rc3"
+=======
+	id 'org.graalvm.buildtools.native' version '0.10.4'
+>>>>>>> 1138c29 (init repository)
+>>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
+}
+
+group = 'net.esserdi'
+version = '1.2202.2025-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+<<<<<<< HEAD
+graalvmNative {
+    binaries {
+        main {
+        	imageName = 'linuxcommand-1.2202.2025'
+=======
+<<<<<<< HEAD
+=======
+graalvmNative {
+    binaries {
+        main {
+>>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
+            javaLauncher = javaToolchains.launcherFor {
+                languageVersion = JavaLanguageVersion.of(21) // Asegúrate de que coincida con tu versión de Java
+            }
+         resources.autodetect()
+        }
+    }
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> 1138c29 (init repository)
+>>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += '-parameters'
+}
+
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+<<<<<<< HEAD
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
+=======
+<<<<<<< HEAD
+=======
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+>>>>>>> 1138c29 (init repository)
+>>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.google.zxing:core:3.5.2'
+    implementation 'com.google.zxing:javase:3.5.2'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+	
+=======
+>>>>>>> 1138c29 (init repository)
+	implementation 'com.google.zxing:core:3.5.2'
+    implementation 'com.google.zxing:javase:3.5.2'
+>>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
+}
+
+application {
+    mainClass = "net.esserdi.linuxcommand.LinuxCommandApiApplication"
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+jlink {
+    // Nombre del lanzador de tu aplicación
+    launcher {
+        name = 'linuxcommands'
+    }
+
+    // Configuración de jpackage para crear un instalador para Linux
+    jpackage {
+        appVersion = '02.12.2024' // Versión de la aplicación
+        description = 'Linux Commands CRUD Application by Cristian Escobedo, developed. Version 02.12.2024'
+        //imageOptions = ['--icon', 'src/main/resources/img/logo.png'] // Ruta del ícono para Linux
+
+        // Tipo de instalador para Linux
+        installerType = 'rpm' // O 'rpm', dependiendo de tu distribución Linux
+
+        // Opciones adicionales para el instalador
+        installerOptions = [
+            '--linux-shortcut', // Crear un acceso directo
+            '--linux-menu-group', 'Esserdi', // Grupo de menú para la aplicación
+            '--linux-package-name', 'Linux-Commands-CRUD', // Nombre del paquete
+            '--linux-deb-maintainer', 'Cristian Escobedo <tuemail@example.com>' // Mantenedor del paquete
+        ]
+    }
+}
+=======
+>>>>>>> 1138c29 (init repository)
+>>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
+
+task customizeAndCopyInstallAndUninstallScripts {
+
+   group = 'deployment'
+   description = "Construye la distribución y genera los scripts de instalación y desinstalación personalizados."
+   
+   dependsOn 'bootDistZip' // Construir el paquete de distribución antes de ejecutar el script
+    
+   def appName = 'linuxcommand'
+   def installDir = '/opt'
+   def zipPath = "${buildDir}/distributions/${project.name}-boot-${version}.zip"
+
+    doLast {
+        // Script de instalación
+        def installTemplateFile = file('deploy/install-template.sh')
+        def installOutputFile = file("${buildDir}/distributions/install.sh")
+
+        def installScriptContent = installTemplateFile.text
+        installScriptContent = installScriptContent
+            .replace("{{APP_NAME}}", appName)
+            .replace("{{ZIP_PATH}}", zipPath)
+            .replace("{{INSTALL_DIR}}", installDir)
+
+        installOutputFile.text = installScriptContent
+        println "Script de instalación personalizado copiado a: ${installOutputFile.absolutePath}"
+
+        // Script de desinstalación
+        def uninstallTemplateFile = file('deploy/uninstall-template.sh')
+        def uninstallOutputFile = file("${buildDir}/distributions/uninstall.sh")
+
+        def uninstallScriptContent = uninstallTemplateFile.text
+        uninstallScriptContent = uninstallScriptContent
+            .replace("{{APP_NAME}}", appName)
+            .replace("{{INSTALL_DIR}}", installDir)
+
+        uninstallOutputFile.text = uninstallScriptContent
+        println "Script de desinstalación personalizado copiado a: ${uninstallOutputFile.absolutePath}"
+    }
+}
+

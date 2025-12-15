@@ -1,0 +1,44 @@
+.terminal-style {
+    background-color: #000; /* Fondo negro */
+    color: #00ff00; /* Texto verde estilo terminal */
+    font-family: "Courier New", Courier, monospace; /* Fuente monoespaciada */
+    border: 1px solid #444; /* Borde gris oscuro */
+    padding: 10px; /* Espaciado interno */
+    resize: none; /* Desactivar redimensionado */
+}
+
+.terminal-style:focus {
+    outline: none; /* Sin borde azul al enfocar */
+    box-shadow: 0 0 5px #00ff00; /* Brillo verde al enfocar */
+}
+
+
+<<<<<<< HEAD
+=======
+/* Estilo retro para el botón */
+.btn-retro {
+  background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee, #84fab0);
+  border: 2px solid #000;
+  border-radius: 20px;
+  color: #000;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.3s ease;
+}
+
+/* Efecto hover */
+.btn-retro:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px #000;
+  background: linear-gradient(45deg, #fbc2eb, #a6c1ee, #84fab0, #ff9a9e, #fad0c4);
+}
+
+/* Efecto al hacer clic */
+.btn-retro:active {
+  transform: translate(0px, 0px);
+  box-shadow: 3px 3px 0px #000;
+}
+
+>>>>>>> 1138c29 (init repository)
