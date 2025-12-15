@@ -79,12 +79,12 @@ Antes de comenzar, asegúrate de tener instalados los siguientes programas en tu
 2. Accede a la aplicación en tu navegador desde la siguiente URL:
     
     ```
-    http://localhost:8080
+    http://localhost:10010
     ```
     
 
 
-La aplicación estará disponible en **[http://localhost:8080](http://localhost:8080)**.
+La aplicación estará disponible en **[http://localhost:10010](http://localhost:10010)**.
 
 ### Configuración de Inicio Automático (Opcional)
 
