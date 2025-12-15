@@ -1,16 +1,6 @@
-<<<<<<< HEAD
 # Linux Commands API Application
 
 ---
-=======
-<<<<<<< HEAD
-# Linux Commands CRUD Application
-=======
-# Linux Commands API Application
-
----
->>>>>>> 1138c29 (init repository)
->>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
 
 Este proyecto es una aplicación web basada en Spring Boot que permite gestionar comandos de Linux de manera fácil y rápida. Puedes agregar, editar, eliminar y ejecutar comandos Linux desde una interfaz web, además de obtener un código QR para cada comando. Además, ofrece una API REST para interactuar con los comandos programáticamente.
 ## Características
@@ -65,15 +55,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes programas en tu
     
     ```bash
     git clone https://github.com/Cristian-Esc/linuxcommand.git
-<<<<<<< HEAD
     cd linux-commands-crud
-=======
-<<<<<<< HEAD
-    cd linuxcommand
-=======
-    cd linux-commands-crud
->>>>>>> 1138c29 (init repository)
->>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
     ```
     
 
@@ -97,12 +79,12 @@ Antes de comenzar, asegúrate de tener instalados los siguientes programas en tu
 2. Accede a la aplicación en tu navegador desde la siguiente URL:
     
     ```
-    http://localhost:10010
+    http://localhost:8080
     ```
     
 
 
-La aplicación estará disponible en **[http://localhost:10010](http://localhost:10010)**.
+La aplicación estará disponible en **[http://localhost:8080](http://localhost:8080)**.
 
 ### Configuración de Inicio Automático (Opcional)
 
@@ -305,42 +287,6 @@ Obtiene un código QR para ejecutar un comando. El código QR contendrá una URL
 ---
 
 
-
-## Cómo Donar
-
-Si deseas apoyar este proyecto y su mantenimiento, puedes hacerlo mediante donaciones en criptomonedas. A continuación te dejo las direcciones para donar:
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
-### Bitcoin (BTC)
-
-```
-bc1qkpswywdqjht6zpfm694t2m6ewww3ukw25vlemu
-````
-
-<<<<<<< HEAD
-=======
->>>>>>> 1138c29 (init repository)
->>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
-### Osmosis (OSMO)
-
-```
-osmo1gcqmcc8xa4lgxflwfm4fcg2nh722dgmel9l54m
-```
-
-### Cosmos (ATOM)
-
-```
-cosmos1gcqmcc8xa4lgxflwfm4fcg2nh722dgmeh7vyrf
-```
-
-Gracias por tu apoyo, ¡todas las donaciones son bienvenidas!
-
----
-
 ## Autor
 
 Este proyecto fue creado por **Cristian Escobedo**. Puedes ver más sobre mi trabajo en [GitHub](https://github.com/Cristian-Esc).
@@ -366,12 +312,4 @@ Siempre que se conserve el aviso de copyright y la licencia MIT original.
 
 
 
-<<<<<<< HEAD
 ¡Gracias por usar **Linux Commands API**!
-=======
-<<<<<<< HEAD
-¡Gracias por usar **Linux Commands CRUD**!
-=======
-¡Gracias por usar **Linux Commands API**!
->>>>>>> 1138c29 (init repository)
->>>>>>> d4e1e4c (Guardar cambios antes de sincronizar)
